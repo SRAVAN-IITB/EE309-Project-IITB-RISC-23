@@ -7,7 +7,7 @@ This project is part of the course Microprocessors (EE309), at IIT Bombay (2024)
 * [Sravan K Suresh](https://github.com/SRAVAN-IITB)
 * [Chinmay Moorjani](https://github.com/krimsonscorpio-manga)
 * [Nimay Upen Shah](https://github.com/nimayshah123)
-* [K Ashvanth](https://github.com/SRAVAN-IITB)
+* [K Ashvanth](https://github.com/k-ashvanth)
 
 [Design Document](/Design.pdf)
 
