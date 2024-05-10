@@ -1,0 +1,1 @@
+Welcome to EE309 Course Project. Here i'll be documenting important points related to the project that need immediate attention.
