@@ -293,6 +293,8 @@ Choose_PC: process (Operation_Code, CS_IsDestination_PRO3, Destination_PRO3, ALU
 	 end if;
     end process Choose_PC;
 
+-- 
+
 Instruction_Word_Selector: process(Counter_Output, Instruction_Word_PRO1, MUX19, Current_PC)
 	begin
 	
@@ -499,16 +501,16 @@ Choice_of_Immediate: process(Instruction_Word_PRO2, Current_PC_PRO2)
         else
             MUX5 <= "111111111" & Instruction_Word_PRO2(5 downto 0) & '0';
         end if;
+	
+	elsif ((Instruction_Word_PRO2(15 downto 12) = "1100") OR 
+		(Instruction_Word_PRO2(15 downto 12) = "1101")) then
 		 
-	elsif ((Instruction_Word_PRO2(15 downto 12) = "1000") OR 
-	     (Instruction_Word_PRO2(15 downto 12) = "1001")) then
-		  
-		  If Instruction_Word_PRO2(5) = '0' then
-            MUX5 <= "000000" & Instruction_Word_PRO2(8 downto 0) & '0';
-        else
-            MUX5 <= "111111" & Instruction_Word_PRO2(8 downto 0) & '0';
-        end if;
-		 
+		 If Instruction_Word_PRO2(5) = '0' then
+		   MUX5 <= "000000" & Instruction_Word_PRO2(8 downto 0) & '0';
+	   else
+		   MUX5 <= "111111" & Instruction_Word_PRO2(8 downto 0) & '0';
+	   end if;	
+
 	elsif ((Instruction_Word_PRO2(15 downto 12) = "0011")) then
 		  
 		 MUX5 <= "0000000" & Instruction_Word_PRO2(8 downto 0);
@@ -691,7 +693,8 @@ Choose_Register_Content: process(RA_PRO3,RB_PRO3,Temporary_Address,Operation_Cod
 		  else
 		      MUX14 <= Mem_ALU_D_PRO5;
 		  end if;
-		  
+	
+		--   So if OpCode is 0111 and no forwarding is to be done
 	 elsif (Operation_Code = "0111") then
 	     MUX14 <= RB_RF_Data;
    elsif (Operation_Code = "0101") then
@@ -701,7 +704,10 @@ Choose_Register_Content: process(RA_PRO3,RB_PRO3,Temporary_Address,Operation_Cod
 	
 	end if;
 	 end process Choose_Register_Content;
-	 
+
+	--  All for SW
+	--  I need to take from REG (Reg_7, Reg_6 and so on) and put in MEM at some address that is computed (R_A, R_A+2, R_A+4 and so on). 
+
 Choose_WriteBack_Data: process(CS_Load_Forwarded_PRO5, CS_IsDestination_PRO5, MUX15, Executed_Result_ALU_D_PRO5, Mem_ALU_D_PRO5, Current_PC_PRO2)
 	 begin
 	 
